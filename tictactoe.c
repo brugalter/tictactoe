@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define BORDER ' '
+#define BORDER '.'
 #define FILLER '_'
 
 typedef enum {false,true} bool;
@@ -132,6 +132,7 @@ bool assignChoice (int userInput, char table[][SIZE], turn whosTurn) {
       break;
   }
 
+  //check if not taken and assign choice
   if (table[x][y] != FILLER) {
     return verified = false;
   }
@@ -141,7 +142,6 @@ bool assignChoice (int userInput, char table[][SIZE], turn whosTurn) {
     else
       table[x][y] = 'o';
   }
-  //assign the location if the spot isn't already taken  
 
   return verified;
 }
@@ -193,21 +193,12 @@ turn changeTurn(turn current) {
 
 int main () 
 {
-
-//create table with padding
   char table[10][10];
-  
-  //track game and end when needed
   bool endGame = false;
   bool inputPassed = false;
-  
-  //track who's turn
   turn currentTurn = pOne;
-
-  //user input
   int userInput = 0;
-  
-  //this only prints the table
+
   setupTable(table);
 
   //main game loop
@@ -215,9 +206,8 @@ int main ()
   {
     printTable(table, currentTurn); 
     userInput = getInput();
-    inputPassed = assignChoice(userInput, table, currentTurn); // make sure between 1-9 and the choice isn't taken
+    inputPassed = assignChoice(userInput, table, currentTurn); 
 
-    //make sure input was valid before checking for a winner
     if (inputPassed) {
       endGame = chkWinner(table);
 
